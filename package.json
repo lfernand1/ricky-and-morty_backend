@@ -1,0 +1,30 @@
+{
+  "name": "ricky-and-morty_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index",
+    "start": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lfernand1/ricky-and-morty_backend.git"
+  },
+  "keywords": [],
+  "author": "Larissa Fernanda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lfernand1/ricky-and-morty_backend/issues"
+  },
+  "homepage": "https://github.com/lfernand1/ricky-and-morty_backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
