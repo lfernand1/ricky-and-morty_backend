@@ -1,0 +1,470 @@
+{
+    "openapi": "3.0.n",
+    "info": {
+      "title": "rick-and-morty-backend",
+      "description": "Rick and Morty Backend",
+      "termsOfService": "",
+      "contact": {
+        "email": "larifernand7@gmail.com"
+      },
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3001",
+        "description": "Test and development API"
+      },
+      {
+        "url": "https://rick-and-morty-backend-crud.herokuapp.com",
+        "description": "Production API"
+      }
+    ],
+    "paths": {
+      "/users/create": {
+        "post": {
+          "summary": "Creates new user",
+          "description": "Route responsable for creating a new user",
+          "tags": [
+            "User"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "examples": {
+                  "Users": {
+                    "value": {
+                      "name": "Douglas",
+                      "username": "DouglasVolcato",
+                      "email": "douglasvolcatoe@gmail.com",
+                      "password": "password15",
+                      "photo": "https://avatars.githubusercontent.com/u/106124397?v=4"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request"
+            }
+          }
+        }
+      },
+      "/users": {
+        "get": {
+          "summary": "Show the users",
+          "description": "Route responsable for showing the users",
+          "tags": [
+            "User"
+          ],
+          "security": [
+            {
+              "token": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      },
+      "/auth/login": {
+        "post": {
+          "summary": "Login in Rick and Morty API",
+          "description": "Route responsable for the login",
+          "tags": [
+            "Auth"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "examples": {
+                  "User": {
+                    "value": {
+                      "email": "douglasvolcato@gmail.com.br",
+                      "password": "12345"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "token": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request"
+            }
+          }
+        }
+      },
+      "/personagem/create": {
+        "post": {
+          "summary": "Creates a new personagem",
+        
+          "security": [
+            {
+              "token": []
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                },
+                "examples": {
+                  "Tweet": {
+                    "value": {
+                      "user": "DouglasVolcato",
+                      "name": "Rick Sanchez",
+                      "imageUrl": ""
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/personagem"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      },
+      "/personagems": {
+        "get": {
+          "summary": "Show the personagem",
+          "description": "Route responsable for showing the personagem",
+          "tags": [
+            "personagem"
+          ],
+          "security": [
+            {
+              "token": []
+            }
+          ],
+          "parameters": [
+            {
+              "in": "query",
+              "name": "limit",
+              "type": "string"
+            },
+            {
+              "in": "query",
+              "name": "offset",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/personagem"
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/personagem/find/{id}": {
+        "get": {
+          "summary": "Search a personagem by id",
+          "description": "Route responsable for searching a personagem by id",
+          "tags": [
+            "personagem"
+          ],
+          "security": [
+            {
+              "token": []
+            }
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "personagem id for search",
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/personagem"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/personagem/update/{id}": {
+        "put": {
+          "summary": "Edit personagem by id",
+          "description": "Route responsable for editing a personagem by id",
+          "tags": [
+            "personagem"
+          ],
+          "security": [
+            {
+              "token": []
+            }
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "personagem id for search",
+              "required": true
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/personagem"
+                },
+                "examples": {
+                  "personagem": {
+                    "value": {
+                      "name": "Nake Terminator",
+                      "imageUrl": ""
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/personagem"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request"
+            }
+          }
+        }
+      },
+      "/personagem/delete/{id}": {
+        "delete": {
+          "summary": "Delete a personagem by id",
+          "description": "Route responsable for deleting a personagem by id",
+          "tags": [
+            "personagemr"
+          ],
+          "security": [
+            {
+              "token": []
+            }
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "personagem id for delete",
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/personagem"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/personagem/search": {
+        "get": {
+          "summary": "Search personagem by name",
+          "description": "Route responsable for searching a personagem by name",
+          "tags": [
+            "personagem"
+          ],
+          "security": [
+            {
+              "token": []
+            }
+          ],
+          "parameters": [
+            {
+              "in": "query",
+              "name": "name",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/Personagem"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "User": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "username": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            },
+            "picture": {
+              "type": "string"
+            }
+          }
+        },
+        "Personagem": {
+          "type": "object",
+          "properties": {
+            "user": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "imageUrl": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "securitySchemes": {
+        "token": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    },
+    "security": {
+      "token": []
+    }
+  }
