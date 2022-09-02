@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     return res.status(401).send({ message: "O token não foi informado!" });
   }
 
-  const parts = authHeader.split(" "); 
+  const parts = authHeader.split(" ");
 
   if (parts.length !== 2) {
     return res.status(401).send({ message: "Token inválido!" });
@@ -32,5 +32,4 @@ module.exports = (req, res, next) => {
 
     return next();
   });
-
 };

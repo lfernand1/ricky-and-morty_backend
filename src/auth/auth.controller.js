@@ -1,4 +1,4 @@
-require("dotenv").config
+require("dotenv").config;
 
 const authService = require("./auth.service");
 const bcrypt = require("bcryptjs");

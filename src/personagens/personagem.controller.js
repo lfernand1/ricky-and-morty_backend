@@ -45,7 +45,9 @@ class PersonagemControllers {
 
   findByIdController = async (req, res) => {
     try {
-      const foundPersonagem = await personagemServices.findByIdService(req.params.id);
+      const foundPersonagem = await personagemServices.findByIdService(
+        req.params.id
+      );
       if (!foundPersonagem || foundPersonagem.length === 0) {
         res.status(404).send({ message: "Id not Found" });
       } else {
@@ -76,9 +78,8 @@ class PersonagemControllers {
 
   deletePersonagemController = async (req, res) => {
     try {
-      const deleatedPersonagem = await personagemServices.deletePersonagemService(
-        req.params.id
-      );
+      const deleatedPersonagem =
+        await personagemServices.deletePersonagemService(req.params.id);
       if (!deleatedPersonagem) {
         res.status(404).send({ message: "Id não encontrado" });
       } else {
@@ -93,9 +94,8 @@ class PersonagemControllers {
     try {
       const name = req.query.name;
 
-      const searchedPersonagem = await personagemServices.searchPersonagemService(
-        name
-      );
+      const searchedPersonagem =
+        await personagemServices.searchPersonagemService(name);
       if (!searchedPersonagem) {
         res.status(404).send({ message: "Nome não encontrado" });
       } else {

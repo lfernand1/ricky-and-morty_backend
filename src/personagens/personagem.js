@@ -8,8 +8,7 @@ const PersonagemSchema = new mongoose.Schema({
   image: {
     type: String,
     required: true,
-  }
- 
+  },
 });
 
-module.exports = Personagem = mongoose.model( "Personagem", PersonagemSchema);
+module.exports = Personagem = mongoose.model("Personagem", PersonagemSchema);

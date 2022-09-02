@@ -9,7 +9,9 @@ const connectDatabase = () => {
       useUnifiedTopology: true,
     })
     .then(() => console.log("MongoDB Conectado!"))
-    .catch((err) => console.log(`Erro ao tentar se conectar com o MongoDB: ${err}`));
+    .catch((err) =>
+      console.log(`Erro ao tentar se conectar com o MongoDB: ${err}`)
+    );
 };
 
 module.exports = connectDatabase;
