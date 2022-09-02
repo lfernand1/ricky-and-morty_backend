@@ -29,4 +29,4 @@ class personagemServices {
   };
 }
 
-module.exports = personagemServices = new PersonagemServices();
+module.exports = personagemServices = new personagemServices();

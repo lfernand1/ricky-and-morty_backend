@@ -1,9 +1,8 @@
 {
-    "openapi": "3.0.n",
+    "openapi": "3.0.0",
     "info": {
-      "title": "rick-and-morty-backend",
-      "description": "Rick and Morty Backend",
-      "termsOfService": "",
+      "title": "API ricky and morty",
+      "description": "API do ricky and morty",
       "contact": {
         "email": "larifernand7@gmail.com"
       },
@@ -11,22 +10,20 @@
     },
     "servers": [
       {
-        "url": "http://localhost:3001",
-        "description": "Test and development API"
+        "url": "https://localhost:3001",
+        "description": "API no Heroku"
       },
       {
-        "url": "https://rick-and-morty-backend-crud.herokuapp.com",
-        "description": "Production API"
+        "url": "http://localhost:3001",
+        "description": "API local"
       }
     ],
     "paths": {
       "/users/create": {
         "post": {
-          "summary": "Creates new user",
-          "description": "Route responsable for creating a new user",
-          "tags": [
-            "User"
-          ],
+          "summary": "Criar um novo usuário",
+          "description": "Rota responsável por criar um novo usuário",
+          "tags": ["Users"],
           "requestBody": {
             "content": {
               "application/json": {
@@ -36,11 +33,11 @@
                 "examples": {
                   "Users": {
                     "value": {
-                      "name": "Douglas",
-                      "username": "DouglasVolcato",
-                      "email": "douglasvolcatoe@gmail.com",
-                      "password": "password15",
-                      "photo": "https://avatars.githubusercontent.com/u/106124397?v=4"
+                      "name": "Morty Smith",
+                      "username": "msmith.",
+                      "email": "remsmith@gmail.com",
+                      "password": "12345",
+                      "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVKFdSZdBneXMUamWiQ8GLV_3FYFpFXuuzBiroRQ-_S8g5Olr0o7ztAr-zmDMp9H-rrpg&usqp=CAU"
                     }
                   }
                 }
@@ -48,36 +45,32 @@
             }
           },
           "responses": {
+            "400": {
+              "description": "Not Found"
+            },
             "201": {
               "description": "Created",
               "content": {
                 "application/json": {
-                  "schema": {
+                  "schemma": {
                     "type": "object",
                     "$ref": "#/components/schemas/User"
                   }
                 }
               }
-            },
-            "400": {
-              "description": "Bad Request"
             }
           }
         }
       },
       "/users": {
         "get": {
-          "summary": "Show the users",
-          "description": "Route responsable for showing the users",
-          "tags": [
-            "User"
-          ],
-          "security": [
-            {
-              "token": []
-            }
-          ],
+          "summary": "Buscar todos os usuários",
+          "description": "Rota responsável por buscar todos os usuários",
+          "tags": ["Users"],
           "responses": {
+            "400": {
+              "description": "Not Found"
+            },
             "200": {
               "description": "OK",
               "content": {
@@ -90,23 +83,15 @@
                   }
                 }
               }
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "401": {
-              "description": "Unauthorized"
             }
           }
         }
       },
       "/auth/login": {
         "post": {
-          "summary": "Login in Rick and Morty API",
-          "description": "Route responsable for the login",
-          "tags": [
-            "Auth"
-          ],
+          "summary": "Entrar",
+          "description": "Rota responsável fazer o login de um user cadastrado",
+          "tags": ["Auth"],
           "requestBody": {
             "content": {
               "application/json": {
@@ -116,7 +101,7 @@
                 "examples": {
                   "User": {
                     "value": {
-                      "email": "douglasvolcato@gmail.com.br",
+                      "email": "remsmith@gmail.com",
                       "password": "12345"
                     }
                   }
@@ -125,47 +110,32 @@
             }
           },
           "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "token": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              }
-            },
             "400": {
-              "description": "Bad Request"
+              "description": "Not Found"
+            },
+            "200": {
+              "description": "OK"
             }
           }
         }
       },
       "/personagem/create": {
         "post": {
-          "summary": "Creates a new personagem",
-        
-          "security": [
-            {
-              "token": []
-            }
-          ],
+          "summary": "Criar um novo personagem",
+          "description": "Rota responsável por criar um novo personagem",
+          "tags": ["personagem"],
+          "security": [{ "bearerAuth": [] }],
           "requestBody": {
             "content": {
               "application/json": {
                 "schema": {
+                  "$ref": "#/components/schemas/personagem"
                 },
                 "examples": {
                   "Tweet": {
                     "value": {
-                      "user": "DouglasVolcato",
-                      "name": "Rick Sanchez",
-                      "imageUrl": ""
+                      "user": "",
+                      "message": "Teste de peronagem do Swagger"
                     }
                   }
                 }
@@ -173,38 +143,32 @@
             }
           },
           "responses": {
+            "401": {
+              "description": "Unauthorized"
+            },
+            "400": {
+              "description": "Not Found"
+            },
             "201": {
               "description": "Created",
               "content": {
                 "application/json": {
-                  "schema": {
+                  "schemma": {
                     "type": "object",
                     "$ref": "#/components/schemas/personagem"
                   }
                 }
               }
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "401": {
-              "description": "Unauthorized"
             }
           }
         }
       },
-      "/personagems": {
+      "/personagem": {
         "get": {
-          "summary": "Show the personagem",
-          "description": "Route responsable for showing the personagem",
-          "tags": [
-            "personagem"
-          ],
-          "security": [
-            {
-              "token": []
-            }
-          ],
+          "summary": "Buscar todos os personagens",
+          "description": "Rota responsável por buscar todos os personagens",
+          "tags": ["personagem"],
+          "security": [{ "bearerAuth": [] }],
           "parameters": [
             {
               "in": "query",
@@ -218,6 +182,12 @@
             }
           ],
           "responses": {
+            "401": {
+              "description": "Unauthorized"
+            },
+            "400": {
+              "description": "Not Found"
+            },
             "200": {
               "description": "OK",
               "content": {
@@ -225,201 +195,144 @@
                   "schema": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/personagem"
+                      "$ref": "#/components/schemas/Personagem"
                     }
                   }
                 }
               }
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "404": {
-              "description": "Not Found"
-            }
-          }
-        }
-      },
-      "/personagem/find/{id}": {
-        "get": {
-          "summary": "Search a personagem by id",
-          "description": "Route responsable for searching a personagem by id",
-          "tags": [
-            "personagem"
-          ],
-          "security": [
-            {
-              "token": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "description": "personagem id for search",
-              "required": true
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "$ref": "#/components/schemas/personagem"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "404": {
-              "description": "Not Found"
-            }
-          }
-        }
-      },
-      "/personagem/update/{id}": {
-        "put": {
-          "summary": "Edit personagem by id",
-          "description": "Route responsable for editing a personagem by id",
-          "tags": [
-            "personagem"
-          ],
-          "security": [
-            {
-              "token": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "description": "personagem id for search",
-              "required": true
-            }
-          ],
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/personagem"
-                },
-                "examples": {
-                  "personagem": {
-                    "value": {
-                      "name": "Nake Terminator",
-                      "imageUrl": ""
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "$ref": "#/components/schemas/personagem"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request"
-            }
-          }
-        }
-      },
-      "/personagem/delete/{id}": {
-        "delete": {
-          "summary": "Delete a personagem by id",
-          "description": "Route responsable for deleting a personagem by id",
-          "tags": [
-            "personagemr"
-          ],
-          "security": [
-            {
-              "token": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "description": "personagem id for delete",
-              "required": true
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "$ref": "#/components/schemas/personagem"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "404": {
-              "description": "Not Found"
             }
           }
         }
       },
       "/personagem/search": {
         "get": {
-          "summary": "Search personagem by name",
-          "description": "Route responsable for searching a personagem by name",
-          "tags": [
-            "personagem"
-          ],
-          "security": [
-            {
-              "token": []
-            }
-          ],
+          "summary": "Buscar personagem por mensagem",
+          "description": "Rota responsável por buscar os personagem que correspondem a mensagem enviada via query params",
+          "tags": ["personagem"],
+          "security": [{ "bearerAuth": [] }],
           "parameters": [
             {
               "in": "query",
-              "name": "name",
+              "name": "message",
               "type": "string",
               "required": true
             }
           ],
           "responses": {
+            "401": {
+              "description": "Unauthorized"
+            },
+            "400": {
+              "description": "Not Found"
+            },
             "200": {
               "description": "OK",
               "content": {
                 "application/json": {
                   "schema": {
-                    "type": "object",
-                    "$ref": "#/components/schemas/Personagem"
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Personagem"
+                    }
                   }
                 }
               }
-            },
+            }
+          }
+        }
+      },
+      "/personagem/{id}/find": {
+        "patch": {
+          "summary": "Achar um personagem",
+          "description": "Rota responsável por achar um personagem",
+          "tags": ["personagem"],
+          "security": [{ "bearerAuth": [] }],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "responses": {
             "401": {
               "description": "Unauthorized"
             },
-            "404": {
+            "400": {
               "description": "Not Found"
+            },
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/tweets/update/:id": {
+        "patch": {
+          "summary": "Atualizar um personagem",
+          "description": "Rota responsável por atualizar um personagem",
+          "tags": ["personagem "],
+          "security": [{ "bearerAuth": [] }],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "type": "string",
+              "description": "Id do user que atualizou",
+              "required": true
+            }
+          ],
+          "responses": {
+            "401": {
+              "description": "Unauthorized"
+            },
+            "400": {
+              "description": "Not Found"
+            },
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/tweets/{id}/delete": {
+        "patch": {
+          "summary": "Deletar um personagem",
+          "description": "Rota responsável por deletar um personagem",
+          "tags": ["personagem"],
+          "security": [{ "bearerAuth": [] }],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "type": "string",
+              "description": "Id do user que deletou",
+              "required": true
+            }
+          ],
+          "responses": {
+            "401": {
+              "description": "Unauthorized"
+            },
+            "400": {
+              "description": "Not Found"
+            },
+            "200": {
+              "description": "OK"
             }
           }
         }
       }
     },
     "components": {
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      },
       "schemas": {
         "User": {
           "type": "object",
@@ -436,7 +349,7 @@
             "password": {
               "type": "string"
             },
-            "picture": {
+            "avatar": {
               "type": "string"
             }
           }
@@ -447,24 +360,20 @@
             "user": {
               "type": "string"
             },
-            "name": {
+            "message": {
               "type": "string"
             },
-            "imageUrl": {
-              "type": "string"
+            "likes": {
+              "type": "number"
+            },
+            "comments": {
+              "type": "number"
+            },
+            "retweets": {
+              "type": "number"
             }
           }
         }
-      },
-      "securitySchemes": {
-        "token": {
-          "type": "http",
-          "scheme": "bearer",
-          "bearerFormat": "JWT"
-        }
       }
-    },
-    "security": {
-      "token": []
     }
   }
